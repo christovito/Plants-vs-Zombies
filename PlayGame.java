@@ -12,10 +12,10 @@ public class PlayGame{
         this.zombieList = new ArrayList<Zombie>();
         this.plantsList = new ArrayList<Plants>();
         this.bulletList = new ArrayList<Bullet>();
-        this.backyard = new Backyard[5][10];
+        this.backyard = new Plants [5][10];
     }
 
-    public updateGame(){
+    public void updateGame(){
         gameOver = false;
 
         ZombieNormal normal = new ZombieNormal();
