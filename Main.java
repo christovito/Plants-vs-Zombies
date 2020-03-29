@@ -29,7 +29,7 @@ public class Main {
 
                 boolean playing = true;
 
-                while (!game.isGameOver() && game.getScore() <= 100){
+                while (playing && !game.isGameOver() && game.getScore() <= 100){
                     System.out.println("Total Score : " + game.gameScore);
                     System.out.println("Total Sunflower Points : " + game.totalSun);
                     game.backyard.printBackyard();          
@@ -125,6 +125,7 @@ public class Main {
                             Plants p = game.plantIter.next();
                             if (p.getRow() == rx-1 && p.getCol() == ry){
                                 game.plantIter.remove();
+                                game.backyard.removeBackyardMaterials(game.backyard, p.getRow(), p.getCol());
                             }
                         }
                         game.update();
