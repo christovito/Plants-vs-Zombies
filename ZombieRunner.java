@@ -24,6 +24,9 @@ public class ZombieRunner extends Zombie{
                         }
                     }
                 }
+                if (this.getCol() - 2 < 0){
+                    this.speed = 1;
+                }
             }          
         }
         backyard.removeBackyardMaterials(backyard, this.getRow(), this.getCol());

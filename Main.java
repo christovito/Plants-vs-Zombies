@@ -29,6 +29,9 @@ public class Main {
 
                 boolean playing = true;
 
+                BackyardMaterials zn = new ZombieRunner(2, 1);
+                game.zombieList.add((Zombie) zn);
+
                 while (playing && !game.isGameOver() && game.getScore() <= 100){
                     System.out.println("Total Score : " + game.gameScore);
                     System.out.println("Total Sunflower Points : " + game.totalSun);
@@ -52,11 +55,11 @@ public class Main {
                         int noPlant = input.nextInt();
                         if (noPlant == 1){
                             System.out.println("Choose the position to plant your Sunflower!");
-                            System.out.println("Example : 2 3");
+                            System.out.println("Example : 2 A");
                             int sx = input.nextInt();
-                            int sy = input.nextInt();
+                            String sy = input.next();
                             if (game.totalSun >= 50){
-                                BackyardMaterials s = new Sunflower(sx-1, sy);
+                                BackyardMaterials s = new Sunflower(sx-1, game.stringToInt(sy)-1);
                                 game.plantList.add((Plants) s);
                                 game.totalSun -= s.getCost();
                                 game.update();
@@ -67,11 +70,11 @@ public class Main {
                             
                         } else if (noPlant == 2){
                             System.out.println("Choose the position to plant your Peashooter!");
-                            System.out.println("Example : 2 3");
+                            System.out.println("Example : 2 A");
                             int px = input.nextInt();
-                            int py = input.nextInt();
+                            String py = input.next();
                             if (game.totalSun >= 100){
-                                BackyardMaterials p = new Peashooter(px-1, py);
+                                BackyardMaterials p = new Peashooter(px-1, game.stringToInt(py)-1);
                                 game.plantList.add((Plants) p);
                                 game.totalSun -= p.getCost();
                                 game.update();
@@ -81,11 +84,11 @@ public class Main {
                             }
                         } else if (noPlant == 3){
                             System.out.println("Choose the position to plant your Snow Peashooter!");
-                            System.out.println("Example : 2 3");
+                            System.out.println("Example : 2 A");
                             int spx = input.nextInt();
-                            int spy = input.nextInt();
+                            String spy = input.next();
                             if (game.totalSun >= 175){
-                                BackyardMaterials sp = new SnowPeashooter(spx - 1, spy);
+                                BackyardMaterials sp = new SnowPeashooter(spx - 1, game.stringToInt(spy)-1);
                                 game.plantList.add((Plants) sp);
                                 game.totalSun -= sp.getCost();
                                 game.update();
@@ -95,11 +98,11 @@ public class Main {
                             } 
                         } else if (noPlant == 4){
                             System.out.println("Choose the position to plant your Walnut!");
-                            System.out.println("Example : 2 3");
+                            System.out.println("Example : 2 A");
                             int wx = input.nextInt();
-                            int wy = input.nextInt();
+                            String wy = input.next();
                             if (game.totalSun >= 175){
-                                BackyardMaterials w = new Walnut(wx-1, wy);
+                                BackyardMaterials w = new Walnut(wx-1, game.stringToInt(wy)-1);
                                 game.plantList.add((Plants) w);
                                 game.totalSun -= w.getCost();
                                 game.update();
@@ -109,21 +112,17 @@ public class Main {
                             } 
                         }
                     } else if (command.equals("SKIP")){
-                        System.out.println("How many steps do you wanna skip?");
-                        int ns = input.nextInt();
-                        for (int i = 0; i < ns; i++){
                             game.update();
                             game.backyard.updateBackyard(game);
-                        }
                     } else if (command.equals("SHOVEL")){
                         System.out.println("Which plant do you want to remove?");
-                        System.out.println("Input position! Example 2 3");
+                        System.out.println("Input position! Example 2 A");
                         int rx = input.nextInt();
-                        int ry = input.nextInt();
+                        String ry = input.next();
                         game.plantIter = game.plantList.iterator();
                         while (game.plantIter.hasNext()) {
                             Plants p = game.plantIter.next();
-                            if (p.getRow() == rx-1 && p.getCol() == ry){
+                            if (p.getRow() == rx-1 && p.getCol() == game.stringToInt(ry)-1){
                                 game.plantIter.remove();
                                 game.backyard.removeBackyardMaterials(game.backyard, p.getRow(), p.getCol());
                             }
@@ -139,9 +138,13 @@ public class Main {
                 if (game.isGameOver()){
                     System.out.println("The zombies ate your brain!");
                     System.out.println("You lose!");
+                    wait(5000);
+                    cls();
                 } else if (game.gameScore >= 100){
                     System.out.println("You defeat all the zombies!");
                     System.out.println("Congratulations! You win!");
+                    wait(5000);
+                    cls();
                     System.out.println("Your score : " + game.gameScore);
                     String name = input.next();
                     System.out.println(name + ", your score has been added to the scoreboard!");

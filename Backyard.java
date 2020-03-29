@@ -21,6 +21,7 @@ public class Backyard {
     }
 
     public void printBackyard(){
+        System.out.println("  ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         System.out.print(" ");
         for (int j = 0; j < col + 1; j++){
             System.out.print("*");
