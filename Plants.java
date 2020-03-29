@@ -1,35 +1,13 @@
-import java.util.ArrayList;
-import java.util.List;
-
-public abstract class Plants extends BackyardMaterials {
-    //protected int cost;
-    //protected int health;
-    //protected ArrayList<Bullet> bulletList;
+public class Plants extends BackyardMaterials {
 
     public Plants(int row, int col){
-        //this.position = new Point(row, col);
         super(row, col);
-        //bulletList = new ArrayList<Bullet>();
+        this.speed = 0;
     }
 
-    public int getCost(){
-        return this.cost;
+    public void shoot(Backyard backyard, Game game){
     }
 
-    public int getHealth(){
-        return this.health;
+    public void produceSun(Backyard backyard, Game game){
     }
-
-    public String getSymbol(){
-        return this.symbol;
-    }
-
-    public boolean isDead(){
-        return this.health == 0;
-    }
-
-    public void shoot(Backyard backyard){
-    }
-
-    
 }

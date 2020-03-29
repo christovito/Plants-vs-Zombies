@@ -1,15 +1,15 @@
-public class ZombieConehead extends Zombie{
+public class ZombieRunner extends Zombie{
 
-    public ZombieConehead(int row, int col){
+    public ZombieRunner(int row, int col){
         super(row, col);
-        this.health = 100;
-        this.speed = 1;
+        this.health = 60;
+        this.speed = 2;
         this.damage = 5;
-        this.symbol = "c";
-    }
+        this.symbol = "r";
+    }    
 
-    public void zombieMove(Backyard backyard, Game game) {
-        this.speed = 1;
+    public void zombieMove(Backyard backyard, Game game){
+        this.speed = 2;
         for (Zombie zombie : game.zombieList) {
             if (zombie == this){
                 for (Plants plant : game.plantList) {
@@ -19,6 +19,9 @@ public class ZombieConehead extends Zombie{
                             plant.health -= this.getDamage();
                             this.health -= plant.getDamage();
                         }
+                        else if (this.getRow() == plant.getRow() && this.getCol() == plant.getCol() + 2){
+                            this.speed = 1;
+                        }
                     }
                 }
             }          
@@ -27,3 +30,4 @@ public class ZombieConehead extends Zombie{
         this.position.col -= this.speed;
     }
 }
+

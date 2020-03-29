@@ -5,25 +5,26 @@ public class ZombieNormal extends Zombie{
         this.health = 60;
         this.speed = 1;
         this.damage = 5;
-        this.symbol = "Z";
+        this.symbol = "z";
     }    
 
-    public void zombieMove(Backyard backyard){
+    public void zombieMove(Backyard backyard, Game game){
         this.speed = 1;
-        backyard.removeBackyardMaterials(this, this.getRow(), this.getCol());
-    
-        for (int i = 0; i < backyard.backyard.length; i++) {
-            for (int j = 0; j < backyard.backyard[0].length; j++) {
-                if (backyard.backyard[i][j] instanceof Plants) {
-                    if (this.getRow() == i && this.getCol() == j + 1) {
-                        this.speed = 0;
-                        backyard.backyard[i][j].health -= this.damage;
+        for (Zombie zombie : game.zombieList) {
+            if (zombie == this){
+                for (Plants plant : game.plantList) {
+                    if (zombie == this) {
+                        if (this.getRow() == plant.getRow() && this.getCol() == plant.getCol() + 1) {
+                            this.speed = 0;
+                            plant.health -= this.getDamage();
+                            this.health -= plant.getDamage();
+                        }
                     }
                 }
-            }
+            }          
         }
-        //backyard.removeBackyardMaterials(this.getRow(), this.getCol());
-        this.position.col -= this.getSpeed();
-        backyard.addBackyardMaterials(this, this.getRow(), this.getCol());
+        backyard.removeBackyardMaterials(backyard, this.getRow(), this.getCol());
+        this.position.col -= this.speed;
     }
 }
+

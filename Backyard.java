@@ -9,7 +9,7 @@ public class Backyard {
         this.backyard = new BackyardMaterials[row][col];
     }
 
-    public Backyard(BackyardMaterials[][] backyard) { //buat ngeprint tampilan matrix backyard
+    public Backyard(BackyardMaterials[][] backyard) {
         row = backyard.length;
         col = backyard[0].length;
         this.backyard = new BackyardMaterials[row][col];
@@ -51,15 +51,28 @@ public class Backyard {
         }
     }
 
-    public void addBackyardMaterials(BackyardMaterials bm, int row, int col) { // buat nambahin objek backyardmaterials ke matrix backyardnya
-        bm.setPosition(row, col);
-        backyard[row][col] = bm;
+    public void updateBackyard(Game game){
+        for (Plants plant : game.getPlantList()){
+            BackyardMaterials p = plant;
+            addBackyardMaterials(p);
+        }
+
+        for (Zombie zombie : game.getZombieList()) {
+            BackyardMaterials z = zombie;
+            addBackyardMaterials(z);
+        }
+
+        for (Bullet bullet : game.getBulletList()){
+            BackyardMaterials b = bullet;
+            addBackyardMaterials(b);
+        }
     }
 
-    public void removeBackyardMaterials(BackyardMaterials bm, int row, int col){// buat menghilangkan objek backyardmaterials dari matrix backyard
-        bm = null;
-        backyard[row][col] = null;
-    }
-
+    public void addBackyardMaterials(BackyardMaterials bm) {
+        backyard[bm.getRow()][bm.getCol()] = bm;
+    }  
     
+    public void removeBackyardMaterials(Backyard backyard, int row, int col){
+        backyard.backyard[row][col] = null;
+    }
 }
