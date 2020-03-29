@@ -29,9 +29,6 @@ public class Main {
 
                 boolean playing = true;
 
-                BackyardMaterials zn = new ZombieRunner(2, 1);
-                game.zombieList.add((Zombie) zn);
-
                 while (playing && !game.isGameOver() && game.getScore() <= 100){
                     System.out.println("Total Score : " + game.gameScore);
                     System.out.println("Total Sunflower Points : " + game.totalSun);
@@ -101,7 +98,7 @@ public class Main {
                             System.out.println("Example : 2 A");
                             int wx = input.nextInt();
                             String wy = input.next();
-                            if (game.totalSun >= 175){
+                            if (game.totalSun >= 50){
                                 BackyardMaterials w = new Walnut(wx-1, game.stringToInt(wy)-1);
                                 game.plantList.add((Plants) w);
                                 game.totalSun -= w.getCost();
