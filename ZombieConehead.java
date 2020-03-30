@@ -4,7 +4,7 @@ public class ZombieConehead extends Zombie{
         super(row, col);
         this.health = 100;
         this.speed = 1;
-        this.damage = 5;
+        this.damage = 10;
         this.symbol = "c";
     }
 
