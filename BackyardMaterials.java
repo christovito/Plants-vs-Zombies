@@ -54,4 +54,19 @@ public abstract class BackyardMaterials {
         this.position = new Point(row, col);
     }
     
+    public void shoot(Game game){
+
+    }
+
+    public void zombieMove(Backyard backyard, Game game){
+
+    }
+
+    public void produceSun(Backyard backyard, Game game){
+
+    }
+
+    public void bulletMove(Backyard backyard, Game game){
+        
+    }
 }

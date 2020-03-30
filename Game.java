@@ -43,7 +43,7 @@ public class Game {
             }
         }
 
-        if (this.gameTurn > 3 && this.gameTurn % 3 == 0){
+        if (this.gameTurn > 3 && this.gameTurn % 3 == 0) {
             this.totalSun += 25;
         }
 
@@ -72,7 +72,6 @@ public class Game {
                 }
                 if (b.getRow() == zombie.getRow() && b.getCol() == zombie.getCol()){
                     zombie.health -= b.getDamage();
-                    bullIter.remove();
                     backyard.removeBackyardMaterials(backyard, b.getRow(), b.getCol()+1);
                 }
             }

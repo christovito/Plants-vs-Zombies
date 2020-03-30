@@ -49,7 +49,6 @@ public class Main {
                         System.out.println("2. (100) Peashooter");
                         System.out.println("3. (175) Snow Peashooter");
                         System.out.println("4.  (50) Walnut");
-
                         int noPlant = input.nextInt();
                         if (noPlant == 1){
                             System.out.println("Choose the position to plant your Sunflower!");
