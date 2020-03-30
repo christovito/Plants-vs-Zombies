@@ -6,7 +6,7 @@ import java.util.Random;
 public class Game {
     public int totalSun = 150;
     public int gameScore = 0;
-    public int gameTurn = 1;
+    public int gameTurn = 0;
     Backyard backyard;
     ArrayList<Zombie> zombieList;
     ArrayList<Plants> plantList;
@@ -43,6 +43,10 @@ public class Game {
             }
         }
 
+        if (this.gameTurn > 3 && this.gameTurn % 3 == 0){
+            this.totalSun += 25;
+        }
+
         for (Plants plant : plantList) {
             if (plant instanceof Shooter){
                 if (isZombieOnLane(plant.getRow(), plant.getCol())){
@@ -56,7 +60,7 @@ public class Game {
         bullIter = bulletList.iterator();
         while (bullIter.hasNext()) {
             Bullet b = bullIter.next();
-            if (b.getCol() >= 48) {
+            if (b.getCol() >= 25) {
                 bullIter.remove();
                 backyard.removeBackyardMaterials(backyard, b.getRow(), b.getCol());
             }
@@ -68,6 +72,7 @@ public class Game {
                 }
                 if (b.getRow() == zombie.getRow() && b.getCol() == zombie.getCol()){
                     zombie.health -= b.getDamage();
+                    bullIter.remove();
                     backyard.removeBackyardMaterials(backyard, b.getRow(), b.getCol()+1);
                 }
             }
@@ -126,7 +131,7 @@ public class Game {
 
     public boolean isGameOver(){
         for (Zombie zombie : zombieList){
-            if (zombie.getCol() <= 0){
+            if (zombie.getCol() == 0){
                 return true;
             } 
         }

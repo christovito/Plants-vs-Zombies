@@ -9,6 +9,7 @@ public class Main {
         
         boolean valid = true;
         while (valid){
+            cls();
             System.out.println("Welcome to Plants vs Zombies!");
             System.out.println("1. Start Game");
             System.out.println("2. Scoreboard");
@@ -29,7 +30,7 @@ public class Main {
 
                 boolean playing = true;
 
-                while (playing && !game.isGameOver() && game.getScore() <= 100){
+                while (playing && !game.isGameOver() && game.getScore() < 100){
                     System.out.println("Total Score : " + game.gameScore);
                     System.out.println("Total Sunflower Points : " + game.totalSun);
                     game.backyard.printBackyard();          
@@ -44,10 +45,10 @@ public class Main {
 
                     if (command.equals("PLANT")){
                         System.out.println("Choose your plant!");
-                        System.out.println("1. Sunflower");
-                        System.out.println("2. Peashooter");
-                        System.out.println("3. Snow Peashooter");
-                        System.out.println("4. Walnut");
+                        System.out.println("1.  (50) Sunflower");
+                        System.out.println("2. (100) Peashooter");
+                        System.out.println("3. (175) Snow Peashooter");
+                        System.out.println("4.  (50) Walnut");
 
                         int noPlant = input.nextInt();
                         if (noPlant == 1){
@@ -136,15 +137,22 @@ public class Main {
                     System.out.println("The zombies ate your brain!");
                     System.out.println("You lose!");
                     wait(5000);
+                    System.out.println("Your score : " + game.gameScore);
+                    System.out.println("Input your name!");
+                    String name = input.next();
+                    System.out.println(name + ", your score has been added to the scoreboard!");
+                    wait(5000);
                     cls();
                 } else if (game.gameScore >= 100){
                     System.out.println("You defeat all the zombies!");
                     System.out.println("Congratulations! You win!");
                     wait(5000);
-                    cls();
                     System.out.println("Your score : " + game.gameScore);
+                    System.out.println("Input your name!");
                     String name = input.next();
                     System.out.println(name + ", your score has been added to the scoreboard!");
+                    wait(5000);
+                    cls();
                 }
             } else if (number == 2){
 
