@@ -22,11 +22,10 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
     private int totalSun = 50;
     private int deadZombie = 0;
     private int zombieCounter = 0;
-    private ArrayList<Plant> plantList;
+    private Matrix<Plant> plantMatrix;
     private ArrayList<Zombie> zombieList;
     protected ArrayList<Bullet> bulletList;
     protected ArrayList<SunflowerPoint> sunList;
-    private ArrayList<Plant> plantListRemove;
     private ArrayList<Zombie> zombieListRemove;
     private ArrayList<Bullet> bulletListRemove;
     private ArrayList<SunflowerPoint> sunListRemove;
@@ -46,12 +45,11 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
         addMouseListener(this);
         addMouseMotionListener(this);
 
-        plantList = new ArrayList<>();
+        plantMatrix = new Matrix<Plant>(5,9);
         zombieList = new ArrayList<>();
         sunList = new ArrayList<>();
         bulletList = new ArrayList<>();
 
-        plantListRemove = new ArrayList<>();
         zombieListRemove = new ArrayList<>();
         sunListRemove = new ArrayList<>();
         bulletListRemove = new ArrayList<>();
@@ -113,14 +111,18 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
         }
        
         for (Zombie zombie : zombieList) {
-            for (Plant plant : plantList) {
-                if (zombie.getX() - plant.getX() <= 50 && zombie.getY() == plant.getY()){
-                    zombie.moving = false;
-                    plant.health -= zombie.getDamage();
-                    if (plant.health <= 0){
-                        plantListRemove.add(plant);
-                        zombie.moving = true;
-                    }
+            for (int i = 0; i < plantMatrix.getRow(); i++){
+                for (int j = 0; j < plantMatrix.getCol(); j++){
+                    if (plantMatrix.getVal(i, j) != null){
+                        if (zombie.getX() - plantMatrix.getVal(i,j).getX() <= 50 && zombie.getX() - plantMatrix.getVal(i,j).getX() > 0 && zombie.getY() == plantMatrix.getVal(i,j).getY()){
+                            zombie.moving = false;
+                            plantMatrix.getVal(i,j).health -= zombie.getDamage();
+                            if (plantMatrix.getVal(i,j).health <= 0){
+                                plantMatrix.removeVal(i,j);
+                                zombie.moving = true;
+                            }
+                         }
+                    }  
                 }
             }
         }
@@ -138,15 +140,8 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
             }
         }
 
-        for (Plant plant : plantList){
-            if (plant.getX() < 42 && plant.getX() > 766 && plant.getY() < 84 && plant.getY() > 564){
-                plantListRemove.add(plant);
-            }
-        }
-
         bulletList.removeAll(bulletListRemove);
         zombieList.removeAll(zombieListRemove);
-        plantList.removeAll(plantListRemove);
         sunList.removeAll(sunListRemove);
     }
 
@@ -155,8 +150,12 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
             zombieList.get(i).act(this);
         }
 
-        for (int i = 0; i < plantList.size(); i++) {
-            plantList.get(i).act(this);
+        for (int i = 0; i < plantMatrix.getRow(); i++){
+            for (int j = 0; j < plantMatrix.getCol(); j++){
+                if (plantMatrix.getVal(i,j) != null){
+                    plantMatrix.getVal(i, j).act(this);
+                }
+            }
         }
 
         for (int i = 0; i < bulletList.size(); i++) {
@@ -174,6 +173,7 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
         resumeGame();
         act(); 
     }
+
     
     private void gameOver(Graphics g) {
         g.setColor(new Color(0, 32, 48));
@@ -195,6 +195,42 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
         g.setColor(new Color(232, 234, 171));
         g.setFont(font);
         g.drawString("CONGRATULATIONS!", 197, 315);
+    }
+
+    private int convertToMatrixRow(int y) {
+        if (y == 90) {
+            return 0;
+        } else if (y == 178) {
+            return 1;
+        } else if (y == 276) {
+            return 2;
+        } else if (y == 378) {
+            return 3;
+        } else {
+            return 4;
+        }
+    }
+
+    private int convertToMatrixCol(int x) {
+        if (x == 50) {
+            return 0;
+        } else if (x == 124) {
+            return 1;
+        } else if (x == 208) {
+            return 2;
+        } else if (x == 292) {
+            return 3;
+        } else if (x == 368) {
+            return 4;
+        } else if (x == 450) {
+            return 5;
+        } else if (x == 530) {
+            return 6;
+        } else if (x == 608) {
+            return 7;
+        } else {
+            return 8;
+        }
     }
 
     private int convertLane(int y){
@@ -296,12 +332,14 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
     }
 
     private boolean isEmptyBlock(int x, int y){
-        for (int i = 0; i < plantList.size(); i++) {
-            if (plantList.get(i).getX() == x && plantList.get(i).getY() == y) {
-                return false;
+        for (int i = 0; i < plantMatrix.getRow(); i++) {
+            for (int j = 0; j < plantMatrix.getCol(); j++) {
+                if (plantMatrix.getVal(x,y) == null){
+                    return true;
+                }
             }
         }
-        return true;
+        return false;
     }
 
     private boolean isMouseDragging(){
@@ -357,8 +395,12 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
     }
 
     private void drawPlant(Graphics g){
-        for (int i = 0; i < plantList.size(); i++) {
-            g.drawImage(plantList.get(i).getImage(), plantList.get(i).getX(), plantList.get(i).getY(), this);
+        for (int i = 0; i < plantMatrix.getRow(); i++) {
+            for (int j = 0; j < plantMatrix.getCol(); j++) {
+                if (plantMatrix.getVal(i, j) != null) {
+                    g.drawImage(plantMatrix.getVal(i,j).getImage(), plantMatrix.getVal(i,j).getX(), plantMatrix.getVal(i,j).getY(), this);
+                } 
+            }
         }
         Toolkit.getDefaultToolkit().sync();
     }
@@ -441,40 +483,36 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
         this.xMouseEnd = e.getX();
         this.yMouseEnd = e.getY();
 
-        if (isEmptyBlock(convertMouseCol(this.xMouseEnd), convertMouseLane(this.yMouseEnd)) && isMouseDragging()){
+        if (isEmptyBlock(convertToMatrixRow(convertMouseLane(this.yMouseEnd)), convertToMatrixCol(convertMouseCol(this.xMouseEnd))) && isMouseDragging()){
 			if (xMouseEnd >= 42 && xMouseEnd <= 766 && yMouseEnd >= 84 && yMouseEnd <= 564) {
 				if (this.clickedButton == 1 && this.totalSun >= 50) {
 					Plant sunflower = new Sunflower(convertMouseCol(this.xMouseEnd), convertMouseLane(this.yMouseEnd));
-					plantList.add(sunflower);
-					this.totalSun -= sunflower.getCost();
+					plantMatrix.setVal(convertToMatrixRow(sunflower.getY()), convertToMatrixCol(sunflower.getX()), sunflower);
+					//this.totalSun -= sunflower.getCost();
 				} else if (this.clickedButton == 2 && this.totalSun >= 100) {
 					Plant pea = new Peashooter(convertMouseCol(this.xMouseEnd), convertMouseLane(this.yMouseEnd));
-					plantList.add(pea);
+					plantMatrix.setVal(convertToMatrixRow(pea.getY()), convertToMatrixCol(pea.getX()), pea);
 					this.totalSun -= pea.getCost();
 				} else if (this.clickedButton == 3 && this.totalSun >= 175) {
 					Plant snowpea = new SnowPeashooter(convertMouseCol(this.xMouseEnd), convertMouseLane(this.yMouseEnd));
-					plantList.add(snowpea);
+					plantMatrix.setVal(convertToMatrixRow(snowpea.getY()), convertToMatrixCol(snowpea.getX()), snowpea);
 					this.totalSun -= snowpea.getCost();
 				} else if (this.clickedButton == 4 && this.totalSun >= 50) {
 					Plant walnut = new Walnut(convertMouseCol(this.xMouseEnd), convertMouseLane(this.yMouseEnd));
-					plantList.add(walnut);
+					plantMatrix.setVal(convertToMatrixRow(walnut.getY()), convertToMatrixCol(walnut.getX()), walnut);
 					this.totalSun -= walnut.getCost();
 				}
 			}
         }
-        if (!isEmptyBlock(convertMouseCol(this.xMouseEnd), convertMouseLane(this.yMouseEnd)) && isMouseDragging()){
+        if (!isEmptyBlock(convertToMatrixRow(convertMouseLane(this.yMouseEnd)), convertToMatrixCol(convertMouseCol(this.xMouseEnd))) && isMouseDragging()){
             if (this.clickedButton == 5) {
                 for (Zombie zombie : zombieList) {
-                    for (Plant plant : plantList) {
-                        if (plant.getX() == convertMouseCol(this.xMouseEnd) && plant.getY() == convertMouseLane(this.yMouseEnd)) {                      
-                            plantListRemove.add(plant);
-                            zombie.moving = true;
-                        }
+                    if (zombie.getX() - plantMatrix.getVal(convertToMatrixRow(convertMouseLane(this.yMouseEnd)), convertToMatrixCol(convertMouseCol(this.xMouseEnd))).getX() <= 50 && zombie.getX() - plantMatrix.getVal(convertToMatrixRow(convertMouseLane(this.yMouseEnd)), convertToMatrixCol(convertMouseCol(this.xMouseEnd))).getX() > 0 && zombie.getY() == plantMatrix.getVal(convertToMatrixRow(convertMouseLane(this.yMouseEnd)), convertToMatrixCol(convertMouseCol(this.xMouseEnd))).getY()){
+                        zombie.moving = true;
                     }
-                    plantList.removeAll(plantListRemove);
-                        
                 }
-            }
+                plantMatrix.removeVal(convertToMatrixRow(convertMouseLane(this.yMouseEnd)), convertToMatrixCol(convertMouseCol(this.xMouseEnd)));
+           }
         }
         this.clickedButton = -1;
         this.drag = false;  
