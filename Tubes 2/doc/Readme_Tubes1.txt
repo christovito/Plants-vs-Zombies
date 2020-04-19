@@ -1,5 +1,9 @@
 Plants vs Zombies
 
+HOW TO START THE GAME
+1. Compile in cmd : javac GamePlay.java
+2. Run the game	  : java GamePlay
+
 HOW TO PLAY
 
 
