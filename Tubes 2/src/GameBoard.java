@@ -14,7 +14,7 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
     private final int PANEL_WIDTH = 800;
     private final int PANEL_HEIGHT = 600;
     private final int DELAY = 25;
-    private final long ZOMBIE_DELAY = 25000;
+    private final long ZOMBIE_DELAY = 20000;
     private final long SUN_DELAY = 10000;
     private final int ZOMBIE_TO_BEAT = 15;
     private long zombieCreated;
@@ -488,7 +488,7 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
 				if (this.clickedButton == 1 && this.totalSun >= 50) {
 					Plant sunflower = new Sunflower(convertMouseCol(this.xMouseEnd), convertMouseLane(this.yMouseEnd));
 					plantMatrix.setVal(convertToMatrixRow(sunflower.getY()), convertToMatrixCol(sunflower.getX()), sunflower);
-					//this.totalSun -= sunflower.getCost();
+					this.totalSun -= sunflower.getCost();
 				} else if (this.clickedButton == 2 && this.totalSun >= 100) {
 					Plant pea = new Peashooter(convertMouseCol(this.xMouseEnd), convertMouseLane(this.yMouseEnd));
 					plantMatrix.setVal(convertToMatrixRow(pea.getY()), convertToMatrixCol(pea.getX()), pea);
