@@ -442,33 +442,38 @@ public class GameBoard extends JPanel implements Runnable, MouseListener, MouseM
         this.yMouseEnd = e.getY();
 
         if (isEmptyBlock(convertMouseCol(this.xMouseEnd), convertMouseLane(this.yMouseEnd)) && isMouseDragging()){
-            if (this.clickedButton == 1 && this.totalSun >= 50) {
-                Plant sunflower = new Sunflower(convertMouseCol(this.xMouseEnd), convertMouseLane(this.yMouseEnd));
-                plantList.add(sunflower);
-                this.totalSun -= sunflower.getCost();
-            } else if (this.clickedButton == 2 && this.totalSun >= 100) {
-                Plant pea = new Peashooter(convertMouseCol(this.xMouseEnd), convertMouseLane(this.yMouseEnd));
-                plantList.add(pea);
-                this.totalSun -= pea.getCost();
-            } else if (this.clickedButton == 3 && this.totalSun >= 175) {
-                Plant snowpea = new SnowPeashooter(convertMouseCol(this.xMouseEnd), convertMouseLane(this.yMouseEnd));
-                plantList.add(snowpea);
-                this.totalSun -= snowpea.getCost();
-            } else if (this.clickedButton == 4 && this.totalSun >= 50) {
-                Plant walnut = new Walnut(convertMouseCol(this.xMouseEnd), convertMouseLane(this.yMouseEnd));
-                plantList.add(walnut);
-                this.totalSun -= walnut.getCost();
-            }
+			if (xMouseEnd >= 42 && xMouseEnd <= 766 && yMouseEnd >= 84 && yMouseEnd <= 564) {
+				if (this.clickedButton == 1 && this.totalSun >= 50) {
+					Plant sunflower = new Sunflower(convertMouseCol(this.xMouseEnd), convertMouseLane(this.yMouseEnd));
+					plantList.add(sunflower);
+					this.totalSun -= sunflower.getCost();
+				} else if (this.clickedButton == 2 && this.totalSun >= 100) {
+					Plant pea = new Peashooter(convertMouseCol(this.xMouseEnd), convertMouseLane(this.yMouseEnd));
+					plantList.add(pea);
+					this.totalSun -= pea.getCost();
+				} else if (this.clickedButton == 3 && this.totalSun >= 175) {
+					Plant snowpea = new SnowPeashooter(convertMouseCol(this.xMouseEnd), convertMouseLane(this.yMouseEnd));
+					plantList.add(snowpea);
+					this.totalSun -= snowpea.getCost();
+				} else if (this.clickedButton == 4 && this.totalSun >= 50) {
+					Plant walnut = new Walnut(convertMouseCol(this.xMouseEnd), convertMouseLane(this.yMouseEnd));
+					plantList.add(walnut);
+					this.totalSun -= walnut.getCost();
+				}
+			}
         }
         if (!isEmptyBlock(convertMouseCol(this.xMouseEnd), convertMouseLane(this.yMouseEnd)) && isMouseDragging()){
             if (this.clickedButton == 5) {
-                for (Plant plant : plantList) {
-                    if (plant.getX() == convertMouseCol(this.xMouseEnd) && plant.getY() == convertMouseLane(this.yMouseEnd)) {
-                        plant.removed = true;
-                        plantListRemove.add(plant);
+                for (Zombie zombie : zombieList) {
+                    for (Plant plant : plantList) {
+                        if (plant.getX() == convertMouseCol(this.xMouseEnd) && plant.getY() == convertMouseLane(this.yMouseEnd)) {                      
+                            plantListRemove.add(plant);
+                            zombie.moving = true;
+                        }
                     }
+                    plantList.removeAll(plantListRemove);
+                        
                 }
-                plantList.removeAll(plantListRemove);
             }
         }
         this.clickedButton = -1;
