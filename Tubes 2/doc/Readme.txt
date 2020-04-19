@@ -6,16 +6,13 @@ HOW TO START THE GAME
 
 HOW TO PLAY
 
-STEP 1 : Pick Start Game on MenuBoard
-Welcome to Plants vs Zombies!
-1. Start Game
-2. Scoreboard
-3. Quit
+STEP 1 : PRE-GAME
+Compile the command above, you will be directed to a GUI screen of Plants vs Zombies Backyard!
 
 STEP 2 : START GAME
 1. When the game begins, the zombie will come after you.
-2. and you can pick some plant on your backyard to defend.
-3. The sunflower points is used for planting a plant that cost certain amount of sunflower points.4
+2. You can pick some plant on your backyard to defend.
+3. The sunflower points is used for planting a plant that cost certain amount of sunflower points.
 
 Tips :
 Each plant has its own function, so choose to plant wisely!
@@ -33,23 +30,22 @@ Tips:
 
 Pay attention to the sunflower points above the backyard.
 The sunflower costs 50 sunflower points, peashooter 100, snow peashooter 175, and walnut 50.
-Make sure you have enough sunflower points, otherwise, there will be a message saying "Your sunflower points are not enough!"
+Make sure you have enough sunflower points
 
 The sunflowers produce 25 sunflower points in a particular period of time!
-The sunflower points is reduced by 50 to 100, but the sunflower produces 25 sunflower points to make the total amount of 125!
 
 STEP 4 : KILL THE ZOMBIES
 1. Plant the peashooter or snow peashooter to battle the zombies.
 2. These plants will shoot bullets to give damage to the zombies, hence the zombies' health decreases.
+3. Use Walnut as your defense
 
 STEP 5 : SHOVEL
-1. Use shovel to remove any plants from the backyard. 
+1. Use shovel to remove any plants from the backyard by dragging the shovel card. 
 2. Remember, removing plants won't restore your sunflower points used for buying the plants!
 
 STEP 6 : WIN THE GAME!
-1. Finally, win the game by scoring 100 points or by killing 15 zombies!
-2. Each defeated zombie will give you additional 10 points!
-3. If any zombies manage to get to the very left side of your backyard, you lose the game!
+1. Finally, win the game by killing 15 zombies!
+2. If any zombies manage to get to the very left side of your backyard, you lose the game!
 
 ----------------------------------GOOD LUCK PROTECTING YOUR OWN BACKYARD!-----------------------------------
 
